@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="CSS/form.css" />
+</head>
+<body> 
+    <div id="page" class="site">
+        <div class="titl">
+            <img class="imgico" src="img/transfer.png" alt="image" >
+            <p class="txt1">TRANFER DETAILS</p>
+        </div>
+        <div class="container">
+            <div class="form-box">
+                <div class="progress">
+                   <div class="logo"><a href="#"><span>Enter</span>Details</a></div>
+                   <ul class="progress-steps ">
+                    <li class="step active"> 
+                        <span>1</span>
+                        <p>මූලික තොරතුරු<br><span>25 secs to complete</span></p>
+                    </li>
+                    <li class="step"> 
+                        <span>2</span>
+                        <p> ස්ථාන මාරු තොරතුරු<br><span>60 secs to complete</span></p>
+                    </li>
+                    
+                   </ul>
+                </div>
+                <form action="php/transfer.php" method="post" enctype="multipart/form-data">
+                    <div class="form-one form-step active">
+                        <div class="bg-svg"></div>
+                            <h2>Step 1: Personal Information</h2>
+                            <p>enter your personal information correctly</p>
+                            <div>
+                                <label for="employee-id">සේවක අංකය:</label>
+                                <input type="text" id="employee-id" name="employee-id" >
+                                <span id="error-message" class="text-danger" style="display: none;"></span>
+                            </div>
+                           
+                                                 
+                    </div>
+
+                        <div class="form-two form-step">
+                            <div class="bg-svg"></div>
+                                <h2>Options and Additional Info</h2>
+                                <div>
+                                    <label for="current_appo_date">ක්‍රීඩා අමාත්‍යාංශයට පැමිණි දිනය:</label>
+                                    <input type="date" id="current_appo_date" name="current_appo_date" required readonly>
+                                </div> 
+                                <div>
+                                    <label for="posts">තනතුර:</label>
+                                    <select id="posts" name="posts" required>
+                                       <option value="">විකල්පයක් තෝරන්න</option>
+                                       <option value="ශ්‍රි ලංකා පරිපාලන සේවය විශේෂ පන්තිය">ශ්‍රි ලංකා පරිපාලන සේවය විශේෂ පන්තිය</option>
+                                       <option value="ශ්‍රි ලංකා පරිපාලන සේවය">ශ්‍රි ලංකා පරිපාලන සේවය</option>
+                                       <option value="ක්‍රමසම්පාදන සේවය">ක්‍රමසම්පාදන සේවය</option>
+                                       <option value="ශ්‍රි ලංකා ගණකාධිකාරි සේවය">ශ්‍රි ලංකා ගණකාධිකාරි සේවය</option>
+                                       <option value="කළමනාකරණ අධිශ්‍රේණිය">කළමනාකරණ අධිශ්‍රේණිය</option>
+                                       <option value="කළමනාකරණ සේවා නිලධාරී">කළමනාකරණ සේවා නිලධාරී</option>
+                                       <option value="සංවර්ධන නිලධාරී">සංවර්ධන නිලධාරී</option>
+                                       <option value="තොරතුරු හා සංනිවේදන නිලධාරී">තොරතුරු හා සංනිවේදන නිලධාරී</option>
+                                       <option value="සංස්කෘතික නිලධාරී">සංස්කෘතික නිලධාරී</option>
+                                    </select>
+                                </div>            
+                                <div>
+                                    <label for="earlywp">පෙර සේවා ස්ථානය:</label>
+                                    <input type="text" id="earlywp" name="earlywp" placeholder="" required>
+                                </div>
+                         </div>
+                         <div class="btn-group">
+                            <button type="button" class="btn-prev" disabled>back</button>
+                            <button type="button" class="btn-next" >Next</button>
+                            <button type="submit" class="btn-submit" >submit</button>
+                       </div>
+                    </div>          
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('employee-id').addEventListener('input', function() {
+            const employeeId = this.value;
+            if (employeeId) {
+                fetch(`php/fetch_transfer_date.php?employee_id=${employeeId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('current_appo_date').value = data.current_appo_date;
+                    })
+                    .catch(error => console.error('Error fetching current appointment date:', error));
+            }
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success')) {
+            alert('Record created successfully!');
+        }
+
+        document.querySelector('.btn-next').addEventListener('click', function() {
+            const employeeId = document.getElementById('employee-id').value;
+            const tableName = 'transfers';
+
+            if (employeeId) {
+                fetch(`php/check_employee.php?employee_id=${employeeId}&table_name=${tableName}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            alert('සේවක හැඳුනුම් අංකය දැනටමත් පවතී.');
+                            setTimeout(() => {
+                                location.reload();
+                            }, 100); 
+                            this.disabled = true; 
+                        } else {
+                            document.querySelector('.form-one').classList.remove('active');
+                            document.querySelector('.form-two').classList.add('active');
+                            this.disabled = false; 
+                        }
+                    })
+                    .catch(error => console.error('Error checking employee ID:', error));
+            } else {
+                alert('කරුණාකර සේවක අංකය ඇතුල් කරන්න.');
+            }
+        });
+   </script>
+    <script src="Js/transfer.js"></script>
+    <script src="Js/func.js"></script>
+</body>
+</html>

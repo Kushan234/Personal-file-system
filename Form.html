@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="CSS/form.css" />
+</head>
+<body>
+     
+    <div id="page" class="site">
+        <div class="titl">
+            <img class="imgico" src="img/person.png" alt="image" >
+            <p class="txt1">ADD USER</p>
+        </div>
+        
+        <div class="container">
+           
+            <div class="form-box">
+                <div class="progress">
+                   <div class="logo"><a href="#"><span>Enter</span>Details</a></div>
+                   <ul class="progress-steps ">
+                    <li class="step active"> 
+                        <span>1</span>
+                        <p>මූලික තොරතුරු<br><span>25 secs to complete</span></p>
+                    </li>
+                    <li class="step"> 
+                        <span>2</span>
+                        <p>නිලධාරීන්ගේ තොරතුරු<br><span>60 secs to complete</span></p>
+                    </li>
+                    <li class="step"> 
+                        <span>3</span>
+                        <p>පෞද්ගලික තොරතුරු<br><span>25 secs to complete</span></p>
+                    </li>
+                   </ul>
+                </div>
+                <form action="php/form.php" method="post" enctype="multipart/form-data">
+                    <div class="form-one form-step active">
+                        <div class="bg-svg"></div>
+                            <h2>Step 1: Personal Information</h2>
+                            <p>enter your personal information correctly</p>
+                            <div>
+                                <label for="employee-id">සේවක අංකය:</label>
+                                <input type="text" id="employee-id" name="employee-id" required>
+                            </div>
+                            <div>
+                                <label for="nic">ජා.හැ.අංකය:</label>
+                             <input type="text" id="nic" name="nic" placeholder="උදා :- 199900101099" required>
+                            </div>
+                            <div>
+                                <label for="name">සම්පූර්ණ නම:</label>
+                                <input type="text" id="name" name="name" placeholder="උදා :- අමල්" required>
+                            </div>                       
+                    </div>
+
+                    <div class="form-two form-step">
+                        <div class="bg-svg"></div>
+                            <h2>Options and Additional Info</h2>
+                            <div>
+                                <label for="option1">තනතුර:</label>
+                                <input list="options" id="option1" name="option1" required placeholder="විකල්පයක් තෝරන්න">
+                                <datalist id="options">
+                                    <option value="ශ්‍රි ලංකා පරිපාලන සේවය විශේෂ පන්තිය"></option>
+                                    <option value="ශ්‍රි ලංකා පරිපාලන සේවය"></option>
+                                    <option value="ක්‍රමසම්පාදන සේවය"></option>
+                                    <option value="ශ්‍රි ලංකා ගණකාධිකාරි සේවය"></option>
+                                    <option value="කළමනාකරණ අධිශ්‍රේණිය"></option>
+                                    <option value="කළමනාකරණ සේවා නිලධාරී"></option>
+                                    <option value="සංවර්ධන නිලධාරී"></option>
+                                    <option value="තොරතුරු හා සංනිවේදන නිලධාරී"></option>
+                                    <option value="සංස්කෘතික නිලධාරී"></option>
+                                </datalist>
+                            </div>            
+                            <div>
+                                <label for="input1">පත්වීම් දිනය:</label>
+                                <input type="date" id="input1" name="input1" placeholder="" required>
+                            </div>
+                            <div>
+                                <label for="input6">අමාත්‍ය්‍යාංශයට පත්වූ දිනය:</label>
+                                <input type="date" id="input6" name="input6" placeholder="" required>
+                            </div>
+                            <div>
+                                <label for="option4">ස්ථීර ද නැද්ද යන්න:</label>
+                                <select id="option4" name="option4" required>
+                                   <option value="">විකල්පයක් තෝරන්න</option>
+                                   <option value="ස්ථීර">ස්ථීර</option>
+                                   <option value="ස්ථීර නැත">ස්ථීර නැත</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="input7">ශ්‍රේණිය:</label>
+                                <select id="option7" name="option7" required>
+                                    <option value="">විකල්පයක් තෝරන්න</option>
+                                    <option value="𝐈 ශ්‍රේණිය"> 𝐈 ශ්‍රේණිය</option>
+                                    <option value="𝐈𝐈 ශ්‍රේණිය">𝐈𝐈 ශ්‍රේණිය</option>
+                                    <option value="𝐈𝐈𝐈 ශ්‍රේණිය">𝐈𝐈𝐈 ශ්‍රේණිය</option>
+                                    <option value="විශේෂ ශ්‍රේණිය">විශේෂ ශ්‍රේණිය</option>
+                                </select>
+                                </div>
+                            <div>
+                                <label for="option2">වැටුප් කේතය:</label>
+                                <select id="option2" name="option2" required>
+                                    <option value="">විකල්පයක් තෝරන්න</option>
+                                    <option value="SL-1">SL-1</option>
+                                    <option value="MN-7">MN-7</option>
+                                    <option value="MN-5">MN-5</option>
+                                    <option value="MN-4">MN-4</option>
+                                    <option value="MN-2">MN-2</option>
+                                    <option value="MT-1">MT-1</option>
+                                    <option value="PL-1">PL-1</option>
+                                    <option value="PL-2">PL-2</option>
+                                    <option value="PL-3">PL-3</option>
+                                </select>
+                            </div>        
+                            <div>
+                                <label for="input3">වැටුප් වර්ධක දිනය:</label>
+                                <input type="date" id="input3" name="input3" placeholder="" >
+                            </div>
+                            <div>
+                                <label for="option3">සම්පූර්ණ කර ඇති කාර්යක්ෂමතා කඩයීම:</label>
+                                <select id="option3" name="option3" required>
+                                    <option value="">විකල්පයක් තෝරන්න</option>
+                                    <option value="𝐈"> 𝐈</option>
+                                    <option value="𝐈𝐈">𝐈𝐈</option>
+                                    <option value="𝐈𝐈𝐈">𝐈𝐈𝐈</option>
+                                </select>
+                            </div>
+                            <div class="option5">
+                                <label for="input5" required>විනය පරීක්ෂණ විගනන පරීක්ෂණ පවතිනවාද නැද්ද යන වග:</label>
+                                <select id="option5" name="option5" >
+                                    <option value="">විකල්පයක් තෝරන්න</option>
+                                    <option value="ඔව්">ඔව්</option>
+                                    <option value="නැත">නැත</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="input5">ස්ථානමාරුවට යටත්වන දිනය:</label>
+                                <input type="date" id="input5" name="input5" placeholder="" disabled>
+                            </div>   
+                            <!-- <div>
+                                <label for="input4">විශ්‍රාම යන දිනය:</label>
+                                <input type="date" id="input4" name="input4" placeholder="" disabled>                    
+                            </div> -->
+                     </div> 
+
+
+                        <div class="form-three form-step">
+                            <div class="bg-svg"></div>
+                                <h2>Options and Additional Info</h2>
+                                <div>
+                                    <label for="dob">උපන් දිනය:</label>
+                                    <input type="date" id="dob" name="dob" required>
+                                </div>
+                                <div>
+                                    <label for="address">ලිපිනය:</label>
+                                    <input type="text" id="address" name="address" placeholder="උදා :- නො.5/2A, පියදිගම, ගාල්ල">
+                                </div>
+                                <div>
+                                    <label for="gender">ස්ත්‍රී / පුරුෂ:</label>
+                                    <select id="gender" name="gender" required>
+                                        <option value="">විකල්පයක් තෝරන්න</option>
+                                        <option value="ස්ත්‍රී">ස්ත්‍රී</option>
+                                        <option value="පුරුෂ">පුරුෂ</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="status">විවාහක / අවිවාහක:</label>
+                                    <select id="status" name="status" required>
+                                        <option value="">විකල්පයක් තෝරන්න</option>
+                                        <option value="විවාහක">විවාහක</option>
+                                        <option value="අවිවාහක">අවිවාහක</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="email">ඊ-මේල් ලිපිනය:</label>
+                                    <input type="email" id="email" name="email" placeholder="උදා :- your@gmail.com" >
+                                </div>
+                                <div>
+                                    <label for="whatsapp">දුරකථන අංකය:</label>
+                                    <input type="text" id="whatsapp" name="whatsapp" placeholder="" required>
+                                </div>
+                                <div>
+                                    <label for="photo">Upload Photo:</label>
+                                    <input type="file" id="photo" name="photo" accept="image/*" onchange="previewPhoto()" ><br>
+                                    <img id="photo-thumbnail" src="" alt="Photo Preview" style="display:none; width:50px; height:50px;"/>                     
+                                </div>
+                         </div>
+                         <div class="btn-group">
+                            <button type="button" class="btn-prev" disabled>back</button>
+                            <button type="button" class="btn-next" >Next</button>
+                            <button type="submit" class="btn-submit" >submit</button>
+                       </div>
+                    </div>          
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="Js/form.js"></script>
+    <script>
+        document.querySelector('.btn-next').addEventListener('click', function() {
+            const employeeId = document.getElementById('employee-id').value;
+            const tableName = 'salary_increments';
+
+            if (employeeId) {
+                fetch(`php/check_employee.php?employee_id=${employeeId}&table_name=${tableName}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            alert('සේවක හැඳුනුම් අංකය දැනටමත් පවතී.');
+                            setTimeout(() => {
+                                location.reload();
+                            }, 100); 
+                            this.disabled = true; 
+                        } else {
+                            document.querySelector('.form-one').classList.remove('active');
+                            document.querySelector('.form-two').classList.add('active');
+                            this.disabled = false; 
+                        }
+                    })
+                    .catch(error => console.error('Error checking employee ID:', error));
+            } else {
+                alert('කරුණාකර සේවක අංකය ඇතුල් කරන්න.');
+            }
+        });
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success')) {
+            alert('Record created successfully!');
+        }
+
+        document.getElementById('input6').addEventListener('change', function() {
+            const appointmentDate = new Date(this.value);
+
+            if (!isNaN(appointmentDate)) {
+                appointmentDate.setFullYear(appointmentDate.getFullYear() + 5);
+           
+                const transferDate = appointmentDate.toISOString().split('T')[0];
+
+                document.getElementById('input5').value = transferDate;
+            }
+        });
+
+        document.getElementById('main-iframe').contentWindow.location.reload();
+
+ 
+   </script>
+</body>
+</html>

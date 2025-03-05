@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+   
+    <link rel="stylesheet" href="CSS/dash.css" />
+</head>
+<body>
+
+    <div class="dash">
+        <div class="topb">
+          
+        </div>
+    <div class="cardbox">
+     
+            <div class="card" id="employees-card">
+                <div>
+                    <div class="details user-count">0</div> 
+                    <div class="cname">නිලධාරීන්</div>
+ 
+                </div>
+                <div>
+                       <div class="ico">
+                        <i class='bx bxs-user'></i>
+                       </div>
+                </div>
+            </div>
+
+        <div class="card">
+            <div>
+                <div class="details permanent-count">0</div>
+                <div class="cname">ස්ථීර නිලධාරීන්</div>
+            </div>
+            <div>
+                   <div class="ico">
+                    <i class='bx bxs-user'></i>
+                   </div>
+            </div>
+        </div>
+        <div class="card">
+            <div>
+                    <div class="details">400</div>
+                    <div class="cname">User</div>
+            </div>
+            <div>
+                   <div class="ico">
+                    <i class='bx bxs-user'></i>
+                   </div>
+            </div>
+        </div>
+       </div> 
+    <div class="row">
+
+    
+    <div class="card1">
+        <div class="chart-container">
+            <div class="donut-chart" id="donut-chart">
+               
+                <div class="donut-hole"></div>
+            </div>
+            <div class="legend" id="legend">
+               
+            </div>
+        </div>
+    </div>
+    <div class="card2">
+    <div class="new-users">
+        <h3>නව නිලධාරීන්</h3>
+        <div class="new-user-details">
+        
+        </div>
+    </div>
+    </div>
+    </div>
+   
+</body>
+<script>
+   
+    function fetchUserCount() {
+        fetch('php/user_count.php') 
+            .then(response => response.json())
+            .then(data => {
+              
+                document.querySelector('.user-count').textContent = data.user_count;
+            })
+            .catch(error => console.error('Error fetching user count:', error));
+    }
+
+ 
+    document.addEventListener('DOMContentLoaded', fetchUserCount);
+
+
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+    fetch('php/user_position_count.php')
+        .then(response => response.json())
+        .then(data => {
+            updateDonutChart(data);
+        })
+        .catch(error => console.error('Error fetching user position count:', error));
+});
+
+
+
+
+
+function updateDonutChart(data) {
+    const chart = document.getElementById('donut-chart');
+    const legend = document.getElementById('legend');
+    
+    const colors = ['#4CAF50', '#2196F3', '#FF9800', '#E91E63', '#1ee928', '#082040', '#fa1717', '#d5e91e', '#b01ee9', '#1b1733'];
+    
+  
+    let total = 0;
+    data.forEach(item => total += parseInt(item.count));
+    
+    let gradient = [];
+    let startAngle = 0;
+    
+    data.forEach((item, index) => {
+        const count = parseInt(item.count);
+        const percentage = (count / total) * 100;
+        const endAngle = startAngle + percentage;
+        
+       
+        gradient.push(`${colors[index]} ${startAngle}% ${endAngle}%`);
+        
+     
+        const legendItem = document.createElement('div');
+        legendItem.classList.add('legend-item');
+        legendItem.innerHTML = `<span class="legend-color" style="background-color: ${colors[index]}"></span> 
+            <span>${item.position} - ${percentage.toFixed(2)}%</span>`;
+        legend.appendChild(legendItem);
+        
+        startAngle = endAngle;
+    });
+    
+   
+    chart.style.background = `conic-gradient(${gradient.join(', ')})`;
+}
+
+
+function fetchPermanentCount() {
+    fetch('php/permanent_count.php')
+        .then(response => response.json())
+        .then(data => {
+            
+            if (data.permanent_count !== undefined) {
+                document.querySelector('.permanent-count').textContent = data.permanent_count;
+            } else {
+                console.error('Error fetching permanent count:', data.error);
+            }
+        })
+        .catch(error => console.error('Error fetching permanent count:', error));
+}
+
+
+document.addEventListener('DOMContentLoaded', fetchPermanentCount);
+
+document.getElementById('employees-card').addEventListener('click',function(){
+    window.location.href='salaryIncrement.html';
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchLatestUsers();
+});
+
+
+
+
+function fetchLatestUsers() {
+    fetch('php/get_latest_users.php') 
+        .then(response => response.json())
+        .then(data => {
+            const newUserDetails = document.querySelector('.new-user-details');
+            newUserDetails.innerHTML = ''; 
+
+            data.forEach(user => {
+                const userElement = document.createElement('div');
+                userElement.classList.add('user-card');
+                userElement.innerHTML = `
+                    <img src="${user.photo}" alt="${user.name1}" class="user-photo" />
+                    <p class="user-name">${user.name1}</p>
+                `;
+                newUserDetails.appendChild(userElement);
+            });
+        })
+        .catch(error => console.error('Error fetching latest users:', error));
+}
+
+</script>
+</html>

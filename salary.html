@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="CSS/form.css" />
+</head>
+<body>
+    <div id="page" class="site">
+        <div class="titl">
+            <img class="imgico" src="img/salary.png" alt="image" >
+            <p class="txt1">SALARY INCREMENT</p>
+        </div>
+        <div class="container">
+            <div class="form-box">
+                <div class="progress">
+                   <div class="logo"><a href="#"><span>Enter</span>Details</a></div>
+                   <ul class="progress-steps ">
+                    <li class="step active"> 
+                        <span>1</span>
+                        <p>මූලික තොරතුරු<br><span>25 secs to complete</span></p>
+                    </li>
+                    <li class="step"> 
+                        <span>2</span>
+                        <p> වැටුප් වර්ධක තොරතුරු<br><span>60 secs to complete</span></p>
+                    </li>
+                    
+                   </ul>
+                </div>
+                <form action="php/salary.php" method="post" enctype="multipart/form-data">
+                    <div class="form-one form-step active">
+                        <div class="bg-svg"></div>
+                            <h2>Step 1: Personal Information</h2>
+                            <p>enter your personal information correctly</p>
+                            <div>
+                                <label for="employee-id">සේවක අංකය:</label>
+                                <input type="text" id="employee-id" name="employee-id" >
+                                <span id="error-message" class="text-danger" style="display: none;"></span>
+                            </div>
+                           
+                                                 
+                    </div>
+
+                        <div class="form-two form-step">
+                            <div class="bg-svg"></div>
+                                <h2>Options and Additional Info</h2>
+                                <div>
+                                    <label for="sinc">වැටුප් වර්ධක දිනය:</label>
+                                    <input type="date" id="sinc" name="sinc" required readonly>
+                                </div>
+                                <div>
+                                    <label for="salarys">වැටුප් වර්ධක නවතා තිබේද:</label>
+                                    <select id="salarys" name="salarys" required>
+                                        <option value="">විකල්පයක් තෝරන්න</option>
+                                        <option value="ඔව්">ඔව්</option>
+                                        <option value="නැත">නැත</option>
+                                    </select>
+                                </div>               
+                                <div>
+                                    <label for="salaryr">වැටුප් වර්ධක අඩු කිරීම:</label>
+                                    <input type="text" id="salaryr" name="salaryr" placeholder="" >
+                                </div>
+                                <div>
+                                    <label for="timep">වැටුප් වර්ධක නවතා ඇති කාල සීමාව:</label>
+                                    <input type="text" id="timep" name="timep" placeholder="" >
+                                </div>
+                                <div>
+                                    <label for="timetp">වැටුප් වර්ධක තාවකාලිකව නතර කිරීම:</label>
+                                    <input type="text" id="timetp" name="timetp" placeholder="" >
+                                </div>
+                                <div>
+                                    <label for="salarysp">වැටුප් වර්ධක ස්ථීරව නවතා තිබේද:</label>
+                                    <select id="salarysp" name="salarysp" required>
+                                        <option value="">විකල්පයක් තෝරන්න</option>
+                                        <option value="ඔව්">ඔව්</option>
+                                        <option value="නැත">නැත</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="timesp">ස්ථීරව නවතා ඇති කාල සීමාව:</label>
+                                    <input type="text" id="timesp" name="timesp" placeholder="" >
+                                </div>
+                         </div>
+                         <div class="btn-group">
+                            <button type="button" class="btn-prev" disabled>back</button>
+                            <button type="button" class="btn-next" >Next</button>
+                            <button type="submit" class="btn-submit" disabled >submit</button>
+                       </div>
+                    </div>          
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success')) {
+            alert('Record created successfully!');
+        }
+
+        document.querySelector('.btn-next').addEventListener('click', function() {
+            const employeeId = document.getElementById('employee-id').value;
+            const tableName = 'salary_increments';
+
+            if (employeeId) {
+                fetch(`php/check_employee.php?employee_id=${employeeId}&table_name=${tableName}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            alert('සේවක හැඳුනුම් අංකය දැනටමත් පවතී.');
+                            setTimeout(() => {
+                                location.reload();
+                            }, 100); 
+                            this.disabled = true; 
+                        } else {
+                            document.querySelector('.form-one').classList.remove('active');
+                            document.querySelector('.form-two').classList.add('active');
+                            this.disabled = false; 
+                        }
+                    })
+                    .catch(error => console.error('Error checking employee ID:', error));
+            } else {
+                alert('කරුණාකර සේවක අංකය ඇතුල් කරන්න.');
+            }
+        });
+
+
+        document.getElementById('employee-id').addEventListener('input', function () {
+            const employeeId = this.value;
+
+            if (employeeId) {
+                // Fetch increment date for the employee from the server
+                fetch(`php/fetch_increment_date.php?employee_id=${employeeId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            const incrementDate = data.increment_date;
+
+                        // Increment the date by 1 year
+                            const date = new Date(incrementDate);
+                            date.setFullYear(date.getFullYear());  // Add 1 year
+
+                            // Format the incremented date as YYYY-MM-DD
+                            const year = date.getFullYear();
+                            const month = String(date.getMonth() + 1).padStart(2, '0');
+                            const day = String(date.getDate()).padStart(2, '0');
+                            const newIncrementDate = `${year}-${month}-${day}`;
+
+                            // Set the value in the 'sinc' field
+                            document.getElementById('sinc').value = newIncrementDate;
+                        } else {
+                            document.getElementById('sinc').value = '';
+                        }
+                    })
+                    .catch(error => console.error('Error fetching increment date:', error));
+            }
+        });
+  
+
+
+   </script>
+    <script src="Js/salary.js"></script>
+    <script src="Js/func.js"></script>
+</body>
+</html>

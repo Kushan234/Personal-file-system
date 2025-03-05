@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="CSS/form.css" />
+</head>
+<body>
+    <div id="page" class="site">
+        <div class="titl">
+            <img class="imgico" src="img/goal.png" alt="image" >
+            <p class="txt1">PROMOTION DETAILS</p>
+        </div>
+        <div class="container">
+            <div class="form-box">
+                <div class="progress">
+                   <div class="logo"><a href="#"><span>Enter</span>Details</a></div>
+                   <ul class="progress-steps ">
+                    <li class="step active"> 
+                        <span>1</span>
+                        <p>මූලික තොරතුරු<br><span>25 secs to complete</span></p>
+                    </li>
+                    <li class="step"> 
+                        <span>2</span>
+                        <p> උසස්වීම් තොරතුරු<br><span>60 secs to complete</span></p>
+                    </li>
+                    
+                   </ul>
+                </div>
+                <form action="php/promotion.php" method="post" enctype="multipart/form-data">
+                    <div class="form-one form-step active">
+                        <div class="bg-svg"></div>
+                            <h2>Step 1: Basic Information</h2>
+                            <p>enter your information correctly</p>
+                            <div>
+                                <label for="employee-id">සේවක අංකය:</label>
+                                <input type="text" id="employee-id" name="employee-id" >
+                                <span id="error-message" class="text-danger" style="display: none;"></span>
+                            </div>                                            
+                    </div>
+
+                        <div class="form-two form-step">
+                            <div class="bg-svg"></div>
+                                <h2>Options and Additional Info</h2>
+                                <div>
+                                    <label for="classi">පන්තිය:</label>
+                                    <input type="text" id="classi" name="classi" readonly>
+                                </div>
+                                <div>
+                                    <label for="class1">𝐈 පන්තියට උසස් කල දිනය:</label>
+                                    <input type="date" id="class1" name="class1">
+                                </div>
+                                <div>
+                                    <label for="class2">𝐈𝐈 පන්තියට උසස් කල දිනය:</label>
+                                    <input type="date" id="class2" name="class2">
+                                </div>
+                                <div>
+                                    <label for="classp">විශේෂ පන්තියට උසස් කල දිනය:</label>
+                                    <input type="date" id="classp" name="classp">
+                                </div>
+                         </div>
+                         <div class="btn-group">
+                            <button type="button" class="btn-prev" disabled>back</button>
+                            <button type="button" class="btn-next" >Next</button>
+                            <button type="submit" class="btn-submit" disabled>submit</button>
+                       </div>
+                    </div>          
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('employee-id').addEventListener('input', function() {
+            const employeeId = this.value;
+
+            if (employeeId) {
+                fetch(`php/fetch_class.php?employee_id=${employeeId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            console.error('Server error:', data.error);
+                            alert('Error: ' + data.error);
+                        } else if (data.grade) {
+                            document.getElementById('classi').value = data.grade;
+                        } else {
+                            document.getElementById('classi').value = '';
+                            alert('Grade not found for this employee ID.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                        alert('There was an error fetching the grade. Please try again.');
+                    });
+            } else {
+                document.getElementById('classi').value = '';
+            }
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success')) {
+            alert('Record created successfully!');
+        }
+
+        document.querySelector('.btn-next').addEventListener('click', function() {
+            const employeeId = document.getElementById('employee-id').value;
+            const tableName = 'promotions';
+
+            if (employeeId) {
+                fetch(`php/check_employee.php?employee_id=${employeeId}&table_name=${tableName}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            alert('සේවක හැඳුනුම් අංකය දැනටමත් පවතී.');
+                            setTimeout(() => {
+                                location.reload();
+                            }, 100); 
+                            this.disabled = true; 
+                        } else {
+                            document.querySelector('.form-one').classList.remove('active');
+                            document.querySelector('.form-two').classList.add('active');
+                            this.disabled = false; 
+                        }
+                    })
+                    .catch(error => console.error('Error checking employee ID:', error));
+            } else {
+                alert('කරුණාකර සේවක අංකය ඇතුල් කරන්න.');
+            }
+        });
+   </script>
+    <script src="Js/promotions.js"></script>
+    <script src="Js/func.js"></script>
+</body>
+</html>

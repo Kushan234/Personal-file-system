@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal File Management System</title>
+    <link rel="stylesheet" href="Assests/bootstrap/css/bootstrap.min.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="CSS/home.css" />
+</head>
+<body>
+    <div class="row">
+            <div class="col-12 col-lg-7 mt-5">
+                <div class="card-container">
+                    <div class="card mt- my-3 mx-3 shadow" onclick="openPage('form.html')">
+                        <div class="card-body">
+                            <img src="img/person.png">
+                            <p class="text-center">Add Details</p>
+                        </div>
+                    </div>
+
+                    <div class="card mt-3 my-3 mx-3 shadow" onclick="openPage('salary.html')">
+                        <div class="card-body">
+                            <img src="img/salary.png">
+                            <p class="text-center">Salary Increment</p>
+                        </div>
+                    </div>
+
+                    <div class="card mt-3 my-3 mx-3 shadow" onclick="openPage('promotions.html')">
+                        <div class="card-body">
+                            <img src="img/goal.png">
+                            <p class="text-center">Promotions</p>
+                        </div>
+                    </div>
+
+                    <div class="card mt-3 my-3 mx-3 shadow" onclick="openPage('activity.html')">
+                        <div class="card-body">
+                            <img src="img/test.png">
+                            <p class="text-center">Efficiency</p>
+                        </div>
+                    </div>
+
+                    <div class="card mt-3 my-3 mx-3 shadow" onclick="openPage('transfer.html')">
+                        <div class="card-body">
+                            <img src="img/transfer.png">
+                            <p class="text-center">Transfer</p>
+                        </div>
+                    </div>
+
+                    <div class="card mt-3 my-3 mx-3 shadow" onclick="openPage('salaryIncrement.html')">
+                        <div class="card-body">
+                            <img src="img/time.png">
+                            <p class="text-center">Details</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-2 mt-5 clock-container d-none d-lg-block">
+                    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+                    <dotlottie-player src="https://lottie.host/9be985f0-936b-4e82-bed6-90b45c523c98/9ntuGWQMh2.json" background="transparent" speed="1" class="flo" style="width: 300px; height: 300px" direction="1" playMode="normal" loop autoplay></dotlottie-player>
+                    <div id="time" class="time"></div>
+                    <div id="date" class="date"></div>
+            </div>
+    </div>
+
+    <script src="Assests/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="Js/home.js"></script>
+</body>
+</html>

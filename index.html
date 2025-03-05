@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal File Management System</title>
+    <link rel="stylesheet" href="Assests/bootstrap/css/bootstrap.min.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="CSS/home.css" />
+
+    <script>
+        function checkForAlerts() {
+            if (localStorage.getItem('user_type') === 'Admin') {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'php/check_alert.php', true);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.new_alert) {
+                            response.alerts.forEach(function(userName) {
+                                alert(userName + ' wants permission!');
+                            });
+                            document.getElementById('main-iframe').src = 'settings.html'; 
+                        }
+                    }
+                };
+                xhr.send();
+            }
+        }
+
+        setInterval(checkForAlerts, 500);
+    </script>
+
+
+    
+    <style>
+        #main-iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            overflow-x: hidden;
+        }
+
+        .col-12.col-lg-6 {
+            padding: 0;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        /* .container-fluid {
+            height: 10vh;
+        } */
+
+        .row {
+            height: 100%;
+        }
+
+        .ali{
+            margin-top: 10rem;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            height: 100vh; 
+        }
+
+        .sidebar .nav {
+            flex-grow: 1;
+        }
+
+        .sidebar .mt-auto {
+            margin-top: auto; 
+        }
+    </style>
+</head>
+<body>
+
+
+    <nav class="navbar navbar-expand-lg bg sticky-top">
+        <img src="img/logo.png" class="ms-3" style="height: 40px; width: 40px;">
+        <div class="container-fluid">
+            <a class="navbar-brand h1 mb-0 fw-bolder text-uppercase ms-3" href="index.html">
+                Personal File Management System
+            </a>
+            <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                            <img src="Assests/1.png" alt="User" class="rounded-circle" width="40" height="40" />
+                        <!-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="profile.html">My Account</a></li>
+                            <li><a class="dropdown-item" href="Log.html">Log Out</a></li>
+                        </ul> -->
+                    </li>
+                    <span class="fw-bolder ms-2 me-3 mb-auto mt-auto" id="userType"></span>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-lg-2 sbg sidebar gx-3">
+                <nav class="nav flex-column mt-3 smb">
+                    <ul class="nav flex-column">
+                        <li class="nav-item ">
+                            <a class="nav-link py-4" aria-current="page" href="index.html">
+                                <img src="img/home.png" class="" style="width: 28px; height: 28px;">
+                                <span class="nav-link-text ms-2">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link py-4" data-page="search.html">
+                                <img src="img/search.png" class="" style="width: 28px; height: 28px;">
+                                <span class="nav-link-text ms-2">Search</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link py-4" data-page="pcard.html">
+                                <img src="img/user.png" class="" style="width: 28px; height: 28px;">
+                                <span class="nav-link-text ms-2">User Details</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link py-4" data-page="Additional.html">
+                                <img src="img/info.png" class="" style="width: 28px; height: 28px;">
+                                <span class="nav-link-text ms-2">Additional Details</span>
+                            </a>
+                        </li>
+                        <li class="nav-item admin-only">
+                            <a class="nav-link py-4" data-page="dash.html">
+                                <img src="img/dash.png" class="" style="width: 28px; height: 28px;">
+                                <span class="nav-link-text ms-2">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item admin-only">
+                            <a class="nav-link py-4" data-page="settings.html">
+                                <img src="img/settings.png" class="" style="width: 28px; height: 28px;">
+                                <span class="nav-link-text ms-2">Settings</span>
+                            </a>
+                        </li>
+                        <div class="mt-auto mb-5">
+                            <a class="nav-link py-4" href="javascript:void(0);" onclick="logout()">
+                                <img src="img/logout.png" style="width: 28px; height: 28px;">
+                                <span class="nav-link-text ms-2">Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-12 col-lg-10 ms-auto">
+                <iframe id="main-iframe" src="Menu.html"></iframe>
+            </div>
+        </div>
+    </div>
+    <script>
+        function openPage(pageUrl) {
+            document.getElementById('main-iframe').src = pageUrl;
+        }
+
+        var userType = localStorage.getItem('user_type');
+
+        if (userType) {
+            document.getElementById('userType').textContent = userType;
+        }
+
+        function logout() {
+            localStorage.removeItem('user_type');
+            localStorage.removeItem('loggedIn');
+            window.location.href = 'login.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+        var userType = localStorage.getItem('user_type');
+
+        if (!userType) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById('userType').textContent = userType;
+
+            if (userType === 'User') {
+                var adminOnlyElements = document.getElementsByClassName('admin-only');
+                for (var i = 0; i < adminOnlyElements.length; i++) {
+                    adminOnlyElements[i].style.display = 'none';
+                }
+            }
+        }
+    });
+
+    var navLinks = document.querySelectorAll('.nav-link[data-page]');
+    navLinks.forEach(function(link) {
+        link.addEventListener('click', function() {
+            var page = this.getAttribute('data-page');
+            var iframe = document.getElementById('main-iframe');
+
+            if (iframe) {
+                iframe.src = page;
+                console.log('Loading page:', page);
+            } else {
+                console.error('Iframe not found');
+            }
+        });
+    });
+
+    function refreshIframe() {
+            const iframe = document.getElementById('main-iframe');
+            iframe.src = iframe.src;
+        }
+
+        window.onload = refreshIframe;
+    </script>
+    <script src="Assests/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="Js/home.js"></script>
+</body>
+</html>

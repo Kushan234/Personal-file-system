@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="CSS/form.css" />
+</head>
+<body>
+    <div id="page" class="site">
+        <div class="titl">
+            <img class="imgico" src="img/salary.png" alt="image" >
+            <p class="txt1">VIEW DETAILS</p>
+        </div>
+        <div class="container">
+            <div class="form-box">
+                <div class="progress">
+                   <div class="logo"><a href="#"><span>View</span>Details</a></div>
+                   <ul class="progress-steps ">
+                    <li class="step active"> 
+                        <span>1</span>
+                        <p>අතිරේක තොරතුරු<br><span>Select to view details</span></p>
+                    </li>
+                   
+                    
+                   </ul>
+                </div>
+                <form action="php/view_details.php" method="post" enctype="multipart/form-data">
+                    <div class="form-one form-step active">
+                        <div class="bg-svg"></div>
+                            <h2>Additional Information</h2>
+                            <p>View Employee Additional Information</p>
+                            
+                            <div>
+                                <label for="employee-id">සේවක අංකය:</label>
+                                <input type="text" id="employee-id" name="employee-id" required>
+                                <span id="error-message" class="text-danger" style="display: none;"></span>
+                            </div>
+
+                            <div>
+                                <label for="option1">අතිරේක තොරතුරු:</label>
+                                <select id="option1" name="option1" required>
+                                   <option value="">විකල්පයක් තෝරන්න</option>
+                                   <option value="salary_increment">වැටුප් වර්ධක තොරතුරු</option>
+                                   <option value="promotion">උසස්වීම් තොරතුරු</option>
+                                   <option value="efficiency">කාර්යක්ෂමතා කඩඉම තොරතුරු  </option>
+                                   <option value="transfer">ස්ථාන මාරු තොරතුරු</option>
+                                  
+                                </select>
+                            </div>     
+                    </div>
+                         <div class="btn-group">
+                            <button type="button" class="btn-prev" disabled>back</button>
+                            <button type="submit" class="btn-next">View</button>
+                            
+                       </div>
+                    </div>          
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="Js/func.js"></script>
+</body>
+</html>
